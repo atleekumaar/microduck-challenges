@@ -102,6 +102,24 @@ All checkpoints evaluated with `arena score` across the 21 commanded speed sweep
 
 ---
 
+### D. Phase 4: Foot-Clearance & Speed Scaling (`sprint-air4-2048-2000`) — IN PROGRESS
+
+- **Hypothesis**: Raising `step_reward` (`air_time` bonus) from `3.0` to `4.0` in `challenge.toml` lifts feet higher during swing, drastically reducing foot drag and stabilizing sprint speeds $\ge 0.50$ m/s.
+- **Parameters**: 2048 parallel environments, 24 steps/env, 2000 iterations, Seed 1.
+- **Commit**: `978266d` (`step_reward 3 -> 4: lift feet higher to stabilize >= 0.50 m/s sprint and beat 4.886s reference`).
+- **Live Run Dir**: `logs/rsl_rl/sprint_2m/2026-11-03_20-11-46_sprint-air4-2048-2000/`
+
+#### Phase 4 Intermediate Evaluation Scorecard:
+| Iteration | Checkpoint Folder | Arena Score | Finishes | Optimal Cmd Speed | Notes |
+|---|---|---|---|---|---|
+| **250** | `publish-air4-250` | **15.640s** | 5/5 | 0.60 m/s | $3.2\times$ faster than Phase 3 Iter 250 (which fell at 0.78m) |
+| **500** | `publish-air4-500` | **9.141s** | 5/5 | 0.20 m/s | Best seed 8.90s. $2.88\times$ faster than Phase 3 Iter 500 (26.356s) |
+| **750** | `publish-air4-750` | **12.984s** | 5/5 | 0.40 m/s | Ultra-wide stability envelope: finishes across **0.20 to 1.00 m/s** |
+| **1000** | `publish-air4-1000` | *Pending* | — | — | Training actively progressing towards Iter 1000 |
+| **Pollen Baseline** | Reference | **4.886s** | 5/5 | 0.55 m/s | Target to beat |
+
+---
+
 ## 5. What Is Working and What Has Been Solved
 
 1. **Sample Starvation Solved**: Scaling environments from 128 to 2048 provided $16\times$ higher sample diversity per PPO update, breaking through the posture-holding local minimum.
